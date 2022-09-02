@@ -15,7 +15,8 @@ class PostQuerySet(models.QuerySet):
         return most_popular_tags
 
     def fetch_with_comments_count(self):
-        return self.annotate(comments_count=Count('comments'))
+        posts_and_comment_counts = self.annotate(comments_count=Count('comments'))
+        return posts_and_comment_counts
 
 
 class Post(models.Model):
