@@ -18,6 +18,12 @@ class PostQuerySet(models.QuerySet):
         posts_and_comment_counts = self.annotate(comments_count=Count('comments'))
         return posts_and_comment_counts
 
+    def fetch_with_tags_count(self):
+        posts = self.all()
+        for post in posts.iterator():
+            Tag.objects.filter(posts=post).annotate(tag_count=Count('posts'))
+        return posts
+
 
 class Post(models.Model):
     objects = PostQuerySet.as_manager()
