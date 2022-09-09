@@ -62,9 +62,9 @@ class Post(models.Model):
 
 class TagQuerySet(models.QuerySet):
 
-    def popular(self):
-        add_count_posts = self.annotate(posts_count=Count('posts')).order_by('-posts_count')
-        return add_count_posts
+    def fetch_with_posts_count(self):
+        add_posts_count = self.annotate(posts_count=Count('posts')).order_by('-posts_count')
+        return add_posts_count
 
 
 class Tag(models.Model):
